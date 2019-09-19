@@ -1,0 +1,137 @@
+<!doctype html>
+<html lang="en">
+  <head>
+    <meta charset="utf-8">
+    <title>getting user info</title>
+    <meta name="description" content="The HTML5 Herald">
+    <meta name="author" content="SitePoint">
+    <link rel="stylesheet" href="unigokon.css?v=1.0">
+    <!--[if lt IE 9]>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/html5shiv/3.7.3/html5shiv.js"></script>
+  <![endif]-->
+  </head>
+  <header>
+  <!-- The core Firebase JS SDK is always required and must be listed first -->
+  <script src="/__/firebase/6.6.1/firebase-app.js"></script>
+  <!-- TODO: Add SDKs for Firebase products that you want to use
+     https://firebase.google.com/docs/web/setup#reserved-urls -->
+  <script src="/__/firebase/5.10.1/firebase-auth.js"></script>
+  <!-- Initialize Firebase -->
+  <script src="/__/firebase/init.js"></script>
+  <script>
+    
+    var config = {
+      apiKey: "AIzaSyBd7cztCfjFy-SGkliZBcyjVmTY6kWd6lo",
+      authDomain: "unigokon.firebaseapp.com",
+    };
+    firebase.initializeApp(config);
+
+    
+    </script>
+  <script>
+    
+    
+</script>
+  <h1>ユーザー情報を確認しています</h1>
+  <div id="info"></div>
+  <form>
+    <button type="button" id="logout" class="hide">ログアウト</button>
+  </form>
+  <script>
+    firebase.auth().onAuthStateChanged( (user) => {
+      let logout = document.getElementById("logout");
+        
+        
+      /*
+      letはvarと似ているが再宣言ができない
+      
+      =>はアロー関数式
+      アロー関数式を使えば、「function」を書かなくて済むため、今までより短く関数を記述することができる。
+      
+      [?]if(!user)の!userは何を意味するのか
+      
+      
+      
+      
+      
+      */  
+        
+        
+
+      //-----------------------------------
+      // ログインチェック
+      //-----------------------------------
+      if(! user) {
+        showMessage('Not Login', 'ログインしていません');
+        logout.classList.add("hide");
+        return(false);
+      }
+
+      //-----------------------------------
+      // ログイン者への処理
+      //-----------------------------------
+      // ログインメッセージ
+        
+        var emailVerified_ja;
+        if(!user.emailVerified){emailVerified_ja='未完了'}else{emailVerified_ja='完了'}
+        
+        
+        //----メールアドレスの判定
+        
+        function emailCheck_ja(email){
+    
+    var emailDomain = email.slice(email.indexOf('@')+1)
+    if(emailDomain == 'osakafu-u.ac.jp'){return '大学支給メールアドレスによる確認は完了しています。'}else{return '登録メールアドレスは大学支給のドメイン（例：@daigaku.ac.jp）でないため、全ての機能を利用するために大学支給メールアドレスによる確認が必要です。'}
+
+//上のドメインの判定にバグがある？    
+    };
+        
+        
+        //----
+        
+        
+      showMessage('ユーザープロフィール', 'ユーザ名:'+user.displayName+'メールアドレス:'+user.email+'<br>メールアドレス確認:'+emailVerified_ja+'<br>学生本人確認のステータス: '+emailCheck_ja('yamao8@live.jp')
+);
+        //how can i insert html tags with showMessage?
+        
+        
+        //console.log(user.displayName)
+        //console.log(user.email)
+        //console.log(user.emailVerified)
+        //console.log(user.photoURL)
+        //console.log(user.isAnonymous)
+        //console.log(user.uid)
+        //console.log(user.providerData)
+        
+        //`${}`
+        
+      // ログアウトボタンを表示
+      logout.classList.remove("hide");
+
+      // ログアウトボタンを押下
+      logout.addEventListener("click", ()=>{
+        firebase.auth().signOut().then(()=>{
+          console.log("ログアウトしました");
+          //window.location.href = 'index.html'; 
+           //ログアウト後にトップページに飛ばしたい
+          
+        })
+        .catch( (error)=>{
+          console.log(`ログアウト時にエラーが発生しました (${error})`);
+        });
+      });
+    });
+
+    /**
+     * メッセージ表示
+     **/
+    function showMessage(title, msg){
+      document.querySelector('h1').innerText = title;
+      document.querySelector('#info').innerText = msg;
+    }
+        
+
+        
+  </script>
+  </body>
+</html>

@@ -1,0 +1,17 @@
+<script>
+//現段階では以下のドメイン以外では本人確認できない仕様
+//@osakafu-u.ac.jp'
+
+function emailCheck_ja(email){
+    
+    var emailDomain = email.slice(email.indexOf('@')+1)
+    if(emailDomain == 'osakafu-u.ac.jp'){return '大学支給メールアドレスによる確認は完了しています。'}else{return '大学支給メールアドレスによる確認が必要です。'}
+
+    
+    };
+alert(emailCheck_ja('yamao8@live.jp'))
+
+
+
+
+</script>
